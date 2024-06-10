@@ -1,0 +1,183 @@
+.title {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 133%;
+  color: #1f2939;
+  margin-bottom: 16px;
+}
+
+.tableWrapper {
+  position: relative;
+  max-height: 864px;
+  overflow: auto;
+  /* scroll-snap-type: y proximity; */
+  width: fit-content;
+}
+
+.table {
+  border-radius: 10px;
+  border: 1px solid #e0e5eb;
+  border-spacing: 0;
+}
+
+.tableHeader {
+  text-align: left;
+  background: #f0f3f7;
+  color: #697180;
+  font-weight: 500;
+  font-size: 13px;
+  min-height: 32px;
+
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.tableHeader tr th {
+  padding: 8px 12px;
+  box-sizing: content-box;
+}
+
+.tableHeaderNumber {
+  width: 40px;
+  text-align: center;
+}
+
+.tableHeaderType {
+  width: 120px;
+}
+
+.tableHeaderDate {
+  width: 160px;
+}
+
+.tableHeaderAuto {
+  width: 130px;
+}
+
+.tableHeaderCurrent {
+  width: 150px;
+}
+
+.tableHeaderAddress {
+  width: 430px;
+}
+
+.tableHeaderNote {
+  width: 380px;
+}
+
+/* TABLE BODY =============== */
+
+.table tr {
+  scroll-snap-align: start;
+}
+
+.tableBody {
+  text-align: left;
+  background: #fff;
+}
+
+.tableBody tr {
+  cursor: pointer;
+  position: relative;
+  box-sizing: content-box;
+}
+
+.tableBody tr:hover {
+  background: #f7f8f9;
+}
+
+.tableBody tr td {
+  padding: 16px 12px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 143%;
+  color: #5e6674;
+}
+
+.tableBodyNumber {
+  text-align: center;
+}
+
+.tableBodyDeleteButton {
+  border: none;
+  background-image: url('../../../public/deleteButton.svg');
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  right: 12px;
+  width: 40px;
+  height: 40px;
+  display: none;
+  cursor: pointer;
+
+  outline: none;
+}
+
+.tableBodyDeleteButton:hover {
+  background-image: url('../../../public/deleteButton_hover.svg');
+}
+
+.tableBodyDeleteButton:disabled {
+  background-image: url('../../../public/deleteButton_disabled.svg');
+}
+
+.tableBody tr:hover .tableBodyDeleteButton {
+  display: block;
+}
+
+.typeWrapper {
+  display: flex;
+  gap: 8px;
+}
+
+/* table footer =========== */
+
+.tableFooter {
+  position: sticky;
+  bottom: 0;
+  border-bottom: 1px solid #eef0f4;
+  border-left: 1px solid #eef0f4;
+  border-right: 1px solid #eef0f4;
+  border-radius: 0 0 8px 8px;
+  z-index: 3;
+  background-color: #fff;
+}
+
+.tableFooterContent {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 16px 10px;
+  gap: 8px;
+}
+
+.tableFooterButton {
+  border: 1px solid #ced5de;
+  border-radius: 6px;
+  padding: 8px 12px;
+  width: 32px;
+  height: 32px;
+  background-color: #fff;
+
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 114%;
+  color: #1f2939;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  outline: none;
+}
+
+.tableFooterButton:hover {
+  background-color: #eeeff0;
+}
+
+.tableFooterButtonCurrent {
+  background-color: #f2f5f8;
+}
