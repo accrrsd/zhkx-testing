@@ -93,115 +93,118 @@ const App = observer(() => {
   return (
     <div className={style.wrapper}>
       <h2 className={style.title}>Список счётчиков</h2>
-      <div className={style.tableWrapper}>
-        <table className={style.table}>
-          <thead className={style.tableHeader}>
-            <tr>
-              <th className={style.tableHeaderNumber}>№</th>
-              <th className={style.tableHeaderType}>Тип</th>
-              <th className={style.tableHeaderDate}>Дата установки</th>
-              <th className={style.tableHeaderAuto}>Автоматический</th>
-              <th className={style.tableHeaderCurrent}>Текущие показания</th>
-              <th className={style.tableHeaderAddress}>Адрес</th>
-              <th className={style.tableHeaderNote}>Примечание</th>
-            </tr>
-          </thead>
-          <tbody className={style.tableBody}>
-            {meterStore.meters.map((item, index) => (
-              <tr key={item.id}>
-                <td className={style.tableBodyNumber}>{index + 1}</td>
-                <td className={style.tableBodyType}>
-                  {handleAreaMeter(item._type)}
-                </td>
-                <td className={style.tableBodyDate}>
-                  {formatDate(item.installation_date)}
-                </td>
-                <td className={style.tableBodyAuto}>
-                  {item.is_automatic ? 'Да' : 'Нет'}
-                </td>
-                <td className={style.tableBodyCurrent}>
-                  {item.initial_values}
-                </td>
-                <td className={style.tableBodyAddress}>{`${
-                  meterStore.addresses.get(item.area.id)?.house.address
-                }`}</td>
-                <td className={style.tableBodyNote}>
-                  {item.description}
-                  <button
-                    className={style.tableBodyDeleteButton}
-                    onClick={() => handleMeterDelete(item.id)}
-                  />
+      {meterStore.loading && <div className={style.loading}>Загрузка...</div>}
+      {!meterStore.loading && (
+        <div className={style.tableWrapper}>
+          <table className={style.table}>
+            <thead className={style.tableHeader}>
+              <tr>
+                <th className={style.tableHeaderNumber}>№</th>
+                <th className={style.tableHeaderType}>Тип</th>
+                <th className={style.tableHeaderDate}>Дата установки</th>
+                <th className={style.tableHeaderAuto}>Автоматический</th>
+                <th className={style.tableHeaderCurrent}>Текущие показания</th>
+                <th className={style.tableHeaderAddress}>Адрес</th>
+                <th className={style.tableHeaderNote}>Примечание</th>
+              </tr>
+            </thead>
+            <tbody className={style.tableBody}>
+              {meterStore.meters.map((item, index) => (
+                <tr key={item.id}>
+                  <td className={style.tableBodyNumber}>{index + 1}</td>
+                  <td className={style.tableBodyType}>
+                    {handleAreaMeter(item._type)}
+                  </td>
+                  <td className={style.tableBodyDate}>
+                    {formatDate(item.installation_date)}
+                  </td>
+                  <td className={style.tableBodyAuto}>
+                    {item.is_automatic ? 'Да' : 'Нет'}
+                  </td>
+                  <td className={style.tableBodyCurrent}>
+                    {item.initial_values}
+                  </td>
+                  <td className={style.tableBodyAddress}>{`${
+                    meterStore.addresses.get(item.area.id)?.house.address
+                  }`}</td>
+                  <td className={style.tableBodyNote}>
+                    {item.description}
+                    <button
+                      className={style.tableBodyDeleteButton}
+                      onClick={() => handleMeterDelete(item.id)}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+            <tfoot className={style.tableFooter}>
+              <tr>
+                <td colSpan={10}>
+                  <div className={style.tableFooterContent}>
+                    <button
+                      className={`${calculateButtonStyle(1)}`}
+                      onClick={() => setCurrentPage(1)}
+                    >
+                      1
+                    </button>
+                    <button
+                      className={`${calculateButtonStyle(2)}`}
+                      onClick={() => setCurrentPage(2)}
+                    >
+                      2
+                    </button>
+                    <button
+                      className={`${
+                        currentPage > 3
+                          ? calculateButtonStyle(currentPage - 1)
+                          : calculateButtonStyle(3)
+                      }`}
+                      onClick={() =>
+                        currentPage > 3
+                          ? setCurrentPage(currentPage - 1)
+                          : setCurrentPage(3)
+                      }
+                    >
+                      {currentPage > 3 ? currentPage - 1 : 3}
+                    </button>
+                    <button
+                      className={`${style.tableFooterButton} ${
+                        currentPage > 3 ? style.tableFooterButtonCurrent : ''
+                      }`}
+                    >
+                      {currentPage > 3 ? currentPage : `...`}
+                    </button>
+                    <button
+                      className={`${calculateButtonStyle(
+                        calculateOffsetPage(1)
+                      )}`}
+                      onClick={() => setCurrentPage(calculateOffsetPage(1))}
+                    >
+                      {calculateOffsetPage(1)}
+                    </button>
+                    <button
+                      className={`${calculateButtonStyle(
+                        calculateOffsetPage(2)
+                      )}`}
+                      onClick={() => setCurrentPage(calculateOffsetPage(2))}
+                    >
+                      {calculateOffsetPage(2)}
+                    </button>
+                    <button
+                      className={`${calculateButtonStyle(
+                        calculateOffsetPage(3)
+                      )}`}
+                      onClick={() => setCurrentPage(calculateOffsetPage(3))}
+                    >
+                      {calculateOffsetPage(3)}
+                    </button>
+                  </div>
                 </td>
               </tr>
-            ))}
-          </tbody>
-          <tfoot className={style.tableFooter}>
-            <tr>
-              <td colSpan={10}>
-                <div className={style.tableFooterContent}>
-                  <button
-                    className={`${calculateButtonStyle(1)}`}
-                    onClick={() => setCurrentPage(1)}
-                  >
-                    1
-                  </button>
-                  <button
-                    className={`${calculateButtonStyle(2)}`}
-                    onClick={() => setCurrentPage(2)}
-                  >
-                    2
-                  </button>
-                  <button
-                    className={`${
-                      currentPage > 3
-                        ? calculateButtonStyle(currentPage - 1)
-                        : calculateButtonStyle(3)
-                    }`}
-                    onClick={() =>
-                      currentPage > 3
-                        ? setCurrentPage(currentPage - 1)
-                        : setCurrentPage(3)
-                    }
-                  >
-                    {currentPage > 3 ? currentPage - 1 : 3}
-                  </button>
-                  <button
-                    className={`${style.tableFooterButton} ${
-                      currentPage > 3 ? style.tableFooterButtonCurrent : ''
-                    }`}
-                  >
-                    {currentPage > 3 ? currentPage : `...`}
-                  </button>
-                  <button
-                    className={`${calculateButtonStyle(
-                      calculateOffsetPage(1)
-                    )}`}
-                    onClick={() => setCurrentPage(calculateOffsetPage(1))}
-                  >
-                    {calculateOffsetPage(1)}
-                  </button>
-                  <button
-                    className={`${calculateButtonStyle(
-                      calculateOffsetPage(2)
-                    )}`}
-                    onClick={() => setCurrentPage(calculateOffsetPage(2))}
-                  >
-                    {calculateOffsetPage(2)}
-                  </button>
-                  <button
-                    className={`${calculateButtonStyle(
-                      calculateOffsetPage(3)
-                    )}`}
-                    onClick={() => setCurrentPage(calculateOffsetPage(3))}
-                  >
-                    {calculateOffsetPage(3)}
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
+            </tfoot>
+          </table>
+        </div>
+      )}
     </div>
   );
 });
